@@ -6,9 +6,13 @@ create table if not exists public.products (
   category text not null,
   price integer not null check (price >= 0),
   description text not null,
+  image_url text not null default '',
   is_active boolean not null default true,
   created_at timestamptz not null default now()
 );
+
+alter table public.products
+  add column if not exists image_url text not null default '';
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
@@ -77,12 +81,24 @@ create policy "anyone can create order items"
     and line_total = unit_price * quantity
   );
 
-insert into public.products (name, category, price, description)
+insert into public.products (name, category, price, description, image_url)
 values
-  ('阿里山金萱', '高山烏龍', 680, '奶香清雅、茶湯柔順，適合日常熱泡。'),
-  ('杉林溪烏龍', '高山烏龍', 820, '花香細緻、喉韻清爽，是本季主打茶款。'),
-  ('紅玉紅茶', '台灣紅茶', 520, '帶有薄荷與肉桂般香氣，冷熱飲都很合適。'),
-  ('東方美人', '蜜香烏龍', 960, '熟果蜜香明顯，茶湯圓潤有層次。'),
-  ('炭焙鐵觀音', '焙火茶', 760, '焙火香沉穩，尾韻帶堅果與焦糖感。'),
-  ('冷泡四季春', '冷泡茶', 360, '清爽花香、低苦澀，適合夏日冷藏浸泡。')
+  ('阿里山金萱', '高山烏龍', 680, '奶香清雅、茶湯柔順，適合日常熱泡。', '/products/alishan-jinxuan.jpg'),
+  ('杉林溪烏龍', '高山烏龍', 820, '花香細緻、喉韻清爽，是本季主打茶款。', '/products/shanlinxi-oolong.jpg'),
+  ('紅玉紅茶', '台灣紅茶', 520, '帶有薄荷與肉桂般香氣，冷熱飲都很合適。', '/products/hongyu-black.jpg'),
+  ('東方美人', '蜜香烏龍', 960, '熟果蜜香明顯，茶湯圓潤有層次。', '/products/oriental-beauty.jpg'),
+  ('炭焙鐵觀音', '焙火茶', 760, '焙火香沉穩，尾韻帶堅果與焦糖感。', '/products/tieguanyin.jpg'),
+  ('冷泡四季春', '冷泡茶', 360, '清爽花香、低苦澀，適合夏日冷藏浸泡。', '/products/sijichun-coldbrew.jpg')
 on conflict do nothing;
+
+update public.products
+set image_url = case name
+  when '阿里山金萱' then '/products/alishan-jinxuan.jpg'
+  when '杉林溪烏龍' then '/products/shanlinxi-oolong.jpg'
+  when '紅玉紅茶' then '/products/hongyu-black.jpg'
+  when '東方美人' then '/products/oriental-beauty.jpg'
+  when '炭焙鐵觀音' then '/products/tieguanyin.jpg'
+  when '冷泡四季春' then '/products/sijichun-coldbrew.jpg'
+  else image_url
+end
+where name in ('阿里山金萱', '杉林溪烏龍', '紅玉紅茶', '東方美人', '炭焙鐵觀音', '冷泡四季春');

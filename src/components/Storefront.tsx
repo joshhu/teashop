@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { getSupabaseClient } from "@/lib/supabase";
 import type { CartLine, CheckoutForm, Product } from "@/types/database";
@@ -45,7 +46,9 @@ export function Storefront() {
         const supabase = getSupabaseClient();
         const { data, error } = await supabase
           .from("products")
-          .select("id,name,category,price,description,is_active,created_at")
+          .select(
+            "id,name,category,price,description,image_url,is_active,created_at",
+          )
           .eq("is_active", true)
           .order("created_at", { ascending: true });
 
@@ -230,13 +233,18 @@ export function Storefront() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_390px] lg:items-start">
+      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1fr_390px] lg:items-start lg:py-16">
         <div>
-          <div className="mb-5 flex items-end justify-between gap-4">
+          <div className="mb-6 flex items-end justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-semibold">商品列表</h2>
-              <p className="mt-2 text-sm text-[#667268]">
-                價格單位為新台幣，結帳前可自由調整數量。
+              <p className="text-sm font-semibold tracking-[0.16em] text-[#8a5a1f]">
+                SELECTED TEA
+              </p>
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[#17241d]">
+                精選茶款
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-[#667268]">
+                依香氣、焙度與飲用情境挑選，結帳前可自由調整數量。
               </p>
             </div>
             <p className="shrink-0 text-sm font-semibold text-[#2b5c45]">
@@ -244,7 +252,7 @@ export function Storefront() {
             </p>
           </div>
 
-          <div className="mb-5 border border-[#d8c8ad] bg-white p-4 shadow-sm">
+          <div className="mb-6 rounded-lg border border-[#e3d6c3] bg-white/90 p-4 shadow-sm shadow-[#6f5b3d]/5">
             <label
               className="block text-sm font-semibold text-[#263a30]"
               htmlFor="product_search"
@@ -308,35 +316,46 @@ export function Storefront() {
                   沒有符合條件的茶葉，請調整搜尋關鍵字或分類。
                 </div>
               ) : (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                   {filteredProducts.map((product) => (
                     <article
                       key={product.id}
-                      className="flex min-h-[260px] flex-col border border-[#d8c8ad] bg-white p-5 shadow-sm"
+                      className="group flex h-full min-h-[460px] flex-col overflow-hidden rounded-xl border border-[#e0d4c2] bg-white shadow-sm shadow-[#7b6a4f]/10 transition duration-300 hover:-translate-y-1 hover:border-[#c7a66c] hover:shadow-2xl hover:shadow-[#6f5b3d]/18"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-xs font-semibold tracking-[0.14em] text-[#8a5a1f]">
-                            {product.category}
-                          </p>
-                          <h3 className="mt-2 text-xl font-semibold">
-                            {product.name}
-                          </h3>
-                        </div>
-                        <p className="whitespace-nowrap text-lg font-semibold text-[#2b5c45]">
-                          {currency.format(product.price)}
-                        </p>
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#efe7db]">
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          fill
+                          sizes="(min-width: 1280px) 280px, (min-width: 640px) 45vw, 90vw"
+                          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                        />
                       </div>
-                      <p className="mt-4 flex-1 leading-7 text-[#526056]">
-                        {product.description}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => addToCart(product)}
-                        className="mt-6 h-11 w-full bg-[#263a30] px-4 text-sm font-semibold text-white transition hover:bg-[#355a46] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
-                      >
-                        加入購物車
-                      </button>
+                      <div className="flex flex-1 flex-col p-5">
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-xs font-semibold tracking-[0.16em] text-[#9b6a2e]">
+                              {product.category}
+                            </p>
+                            <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#17241d]">
+                              {product.name}
+                            </h3>
+                          </div>
+                          <p className="whitespace-nowrap text-lg font-semibold text-[#2b5c45]">
+                            {currency.format(product.price)}
+                          </p>
+                        </div>
+                        <p className="mt-4 flex-1 text-[15px] leading-7 text-[#5f6b62]">
+                          {product.description}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => addToCart(product)}
+                          className="mt-6 h-12 w-full rounded-lg bg-[#263a30] px-4 text-sm font-semibold text-white transition hover:bg-[#355a46] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                        >
+                          加入購物車
+                        </button>
+                      </div>
                     </article>
                   ))}
                 </div>
