@@ -175,52 +175,33 @@ export function Storefront() {
 
   return (
     <main className="min-h-screen bg-[#f8f5ef] text-[#1d2620]">
-      <section className="border-b border-[#dfd5c5] bg-[#f8f5ef]">
-        <div className="mx-auto grid min-h-[72vh] w-full max-w-7xl gap-10 px-5 py-8 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-12">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold tracking-[0.18em] text-[#8a5a1f]">
+      <section
+        className="relative min-h-[72vh] overflow-hidden border-b border-[#dfd5c5] bg-cover bg-center"
+        style={{ backgroundImage: "url('/tea-hero.png')" }}
+      >
+        <div className="absolute inset-0 bg-[#0d1f18]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#06150f]/70 via-[#06150f]/35 to-[#06150f]/10" />
+        <div className="relative mx-auto flex min-h-[72vh] w-full max-w-7xl items-center px-5 py-12 sm:px-8 lg:py-16">
+          <div className="max-w-3xl text-white">
+            <p className="text-sm font-semibold tracking-[0.18em] text-[#f2d8a5]">
               TAIWAN TEA SHOP
             </p>
             <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
               茶葉小舖
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-[#526056]">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/88">
               精選台灣高山烏龍、紅玉紅茶與冷泡茶，從商品挑選到送出訂單都在同一頁完成。
             </p>
-            <div className="mt-8 flex flex-wrap gap-3 text-sm font-medium text-[#314238]">
-              <span className="border border-[#cbb99f] bg-white px-4 py-2">
+            <div className="mt-8 flex flex-wrap gap-3 text-sm font-medium text-white">
+              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
                 今日商品 {products.length} 款
               </span>
-              <span className="border border-[#cbb99f] bg-white px-4 py-2">
+              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
                 購物車 {itemCount} 件
               </span>
-              <span className="border border-[#cbb99f] bg-white px-4 py-2">
+              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
                 小計 {currency.format(subtotal)}
               </span>
-            </div>
-          </div>
-
-          <div className="relative min-h-[320px] overflow-hidden border border-[#d8c8ad] bg-[#28362f] p-6 text-white shadow-2xl shadow-[#7b6a4f]/20">
-            <div className="absolute inset-x-0 top-0 h-24 bg-[#c99345]" />
-            <div className="relative grid h-full min-h-[280px] content-between gap-8">
-              <div>
-                <p className="text-sm font-medium text-[#f3e7d4]">本季主打</p>
-                <h2 className="mt-3 text-3xl font-semibold">杉林溪烏龍</h2>
-                <p className="mt-3 max-w-sm leading-7 text-[#d8e0d9]">
-                  清香花韻、回甘細緻，適合熱泡也適合做冷泡茶。
-                </p>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {["高山", "焙火", "蜜香"].map((label) => (
-                  <div
-                    key={label}
-                    className="border border-white/25 bg-white/10 p-4 text-center"
-                  >
-                    <div className="text-2xl font-semibold">{label}</div>
-                    <div className="mt-2 text-xs text-[#d8e0d9]">精選茶款</div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
