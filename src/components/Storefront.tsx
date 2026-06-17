@@ -16,12 +16,22 @@ const initialForm: CheckoutForm = {
   customer_phone: "",
 };
 
+const categories = [
+  "高山烏龍",
+  "台灣紅茶",
+  "蜜香烏龍",
+  "焙火茶",
+  "冷泡茶",
+] as const;
+
 type CheckoutState = "idle" | "submitting" | "success" | "error";
 
 export function Storefront() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Record<string, CartLine>>({});
   const [form, setForm] = useState<CheckoutForm>(initialForm);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [checkoutState, setCheckoutState] = useState<CheckoutState>("idle");
@@ -82,6 +92,19 @@ export function Storefront() {
     () => cartLines.reduce((sum, line) => sum + line.quantity, 0),
     [cartLines],
   );
+  const filteredProducts = useMemo(() => {
+    const keyword = searchTerm.trim().toLocaleLowerCase("zh-TW");
+
+    return products.filter((product) => {
+      const matchesKeyword =
+        keyword.length === 0 ||
+        product.name.toLocaleLowerCase("zh-TW").includes(keyword);
+      const matchesCategory =
+        selectedCategory.length === 0 || product.category === selectedCategory;
+
+      return matchesKeyword && matchesCategory;
+    });
+  }, [products, searchTerm, selectedCategory]);
 
   function addToCart(product: Product) {
     setCheckoutState("idle");
@@ -216,6 +239,54 @@ export function Storefront() {
                 價格單位為新台幣，結帳前可自由調整數量。
               </p>
             </div>
+            <p className="shrink-0 text-sm font-semibold text-[#2b5c45]">
+              符合 {filteredProducts.length} 筆
+            </p>
+          </div>
+
+          <div className="mb-5 border border-[#d8c8ad] bg-white p-4 shadow-sm">
+            <label
+              className="block text-sm font-semibold text-[#263a30]"
+              htmlFor="product_search"
+            >
+              搜尋茶葉
+            </label>
+            <input
+              id="product_search"
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="輸入茶葉名稱關鍵字"
+              className="mt-2 h-11 w-full border border-[#cbb99f] bg-[#fffdf9] px-3 text-[#1d2620] placeholder:text-[#8a938b] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+            />
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("")}
+                className={`h-10 border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
+                  selectedCategory === ""
+                    ? "border-[#263a30] bg-[#263a30] text-white"
+                    : "border-[#cbb99f] bg-[#f8f5ef] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
+                }`}
+              >
+                全部
+              </button>
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`h-10 border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
+                    selectedCategory === category
+                      ? "border-[#263a30] bg-[#263a30] text-white"
+                      : "border-[#cbb99f] bg-[#f8f5ef] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
 
           {isLoading ? (
@@ -231,38 +302,46 @@ export function Storefront() {
               目前沒有上架商品，請先在 Supabase 匯入範例資料。
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {products.map((product) => (
-                <article
-                  key={product.id}
-                  className="flex min-h-[260px] flex-col border border-[#d8c8ad] bg-white p-5 shadow-sm"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-semibold tracking-[0.14em] text-[#8a5a1f]">
-                        {product.category}
+            <>
+              {filteredProducts.length === 0 ? (
+                <div className="border border-dashed border-[#cbb99f] bg-white p-8 text-[#526056]">
+                  沒有符合條件的茶葉，請調整搜尋關鍵字或分類。
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {filteredProducts.map((product) => (
+                    <article
+                      key={product.id}
+                      className="flex min-h-[260px] flex-col border border-[#d8c8ad] bg-white p-5 shadow-sm"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-xs font-semibold tracking-[0.14em] text-[#8a5a1f]">
+                            {product.category}
+                          </p>
+                          <h3 className="mt-2 text-xl font-semibold">
+                            {product.name}
+                          </h3>
+                        </div>
+                        <p className="whitespace-nowrap text-lg font-semibold text-[#2b5c45]">
+                          {currency.format(product.price)}
+                        </p>
+                      </div>
+                      <p className="mt-4 flex-1 leading-7 text-[#526056]">
+                        {product.description}
                       </p>
-                      <h3 className="mt-2 text-xl font-semibold">
-                        {product.name}
-                      </h3>
-                    </div>
-                    <p className="whitespace-nowrap text-lg font-semibold text-[#2b5c45]">
-                      {currency.format(product.price)}
-                    </p>
-                  </div>
-                  <p className="mt-4 flex-1 leading-7 text-[#526056]">
-                    {product.description}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => addToCart(product)}
-                    className="mt-6 h-11 w-full bg-[#263a30] px-4 text-sm font-semibold text-white transition hover:bg-[#355a46] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
-                  >
-                    加入購物車
-                  </button>
-                </article>
-              ))}
-            </div>
+                      <button
+                        type="button"
+                        onClick={() => addToCart(product)}
+                        className="mt-6 h-11 w-full bg-[#263a30] px-4 text-sm font-semibold text-white transition hover:bg-[#355a46] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                      >
+                        加入購物車
+                      </button>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
 

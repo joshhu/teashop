@@ -1,6 +1,6 @@
 # 茶葉小舖
 
-茶葉小舖是使用 Next.js App Router、TypeScript、Tailwind CSS 與 Supabase 製作的線上商店前台。使用者可以瀏覽茶葉商品、加入購物車、調整數量、查看小計，並填寫姓名、Email、電話送出訂單。
+茶葉小舖是使用 Next.js App Router、TypeScript、Tailwind CSS 與 Supabase 製作的線上商店前台。使用者可以搜尋茶葉、依分類篩選商品、加入購物車、調整數量、查看小計，並填寫姓名、Email、電話送出訂單。
 
 ## 技術
 
