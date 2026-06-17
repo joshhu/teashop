@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { getSupabaseClient } from "@/lib/supabase";
+import { cartSubtotal } from "@/lib/cart";
 import type { CartLine, CheckoutForm, Product } from "@/types/database";
 
 const currency = new Intl.NumberFormat("zh-TW", {
@@ -83,14 +84,7 @@ export function Storefront() {
   }, []);
 
   const cartLines = useMemo(() => Object.values(cart), [cart]);
-  const subtotal = useMemo(
-    () =>
-      cartLines.reduce(
-        (sum, line) => sum + line.product.price * line.quantity,
-        0,
-      ),
-    [cartLines],
-  );
+  const subtotal = useMemo(() => cartSubtotal(cartLines), [cartLines]);
   const itemCount = useMemo(
     () => cartLines.reduce((sum, line) => sum + line.quantity, 0),
     [cartLines],
