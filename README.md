@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 茶葉小舖
 
-## Getting Started
+茶葉小舖是使用 Next.js App Router、TypeScript、Tailwind CSS 與 Supabase 製作的線上商店前台。使用者可以瀏覽茶葉商品、加入購物車、調整數量、查看小計，並填寫姓名、Email、電話送出訂單。
 
-First, run the development server:
+## 技術
+
+- Next.js 16 App Router
+- TypeScript
+- Tailwind CSS 4
+- Supabase JavaScript client
+- Supabase Postgres + RLS
+
+## 本機設定
+
+1. 安裝套件：
+
+```bash
+npm install
+```
+
+2. 建立 `.env.local`，填入 Supabase 連線資訊：
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=你的 Supabase 專案網址
+NEXT_PUBLIC_SUPABASE_ANON_KEY=你的 Supabase anon key
+```
+
+3. 到 Supabase SQL Editor 執行：
+
+```bash
+supabase/schema.sql
+```
+
+4. 啟動開發伺服器：
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+開啟 http://localhost:3000。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 資料庫設計
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+SQL 位於 `supabase/schema.sql`，包含三張資料表：
 
-## Learn More
+- `products`：商品資料，公開可讀。
+- `orders`：訂單主檔，公開可新增，不公開讀取。
+- `order_items`：訂單明細，公開可新增，不公開讀取。
 
-To learn more about Next.js, take a look at the following resources:
+因 Supabase 自 2026-04-28 起新表可能不會自動暴露到 Data API，SQL 內已明確加入 `GRANT`，並啟用 RLS 與對應 policy。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 驗證
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm run build
+```
