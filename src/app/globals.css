@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5ef;
-  --foreground: #1d2620;
+  --background: #f6f0e5;
+  --foreground: #1d241e;
+  --font-serif-brand: Georgia, "Times New Roman", "Noto Serif TC", "Songti TC", serif;
 }
 
 @theme inline {
@@ -21,4 +22,8 @@ body {
 button,
 input {
   font: inherit;
+}
+
+.font-serif-brand {
+  font-family: var(--font-serif-brand);
 }

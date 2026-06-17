@@ -200,32 +200,39 @@ export function Storefront() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f8f5ef] text-[#1d2620]">
+    <main className="min-h-screen bg-[#f6f0e5] text-[#1d241e]">
       <section
-        className="relative min-h-[72vh] overflow-hidden border-b border-[#dfd5c5] bg-cover bg-center"
+        className="relative min-h-[78vh] overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/tea-hero.png')" }}
       >
-        <div className="absolute inset-0 bg-[#0d1f18]/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#06150f]/70 via-[#06150f]/35 to-[#06150f]/10" />
-        <div className="relative mx-auto flex min-h-[72vh] w-full max-w-7xl items-center px-5 py-12 sm:px-8 lg:py-16">
+        <div className="absolute inset-0 bg-[#102018]/48" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07110c]/82 via-[#15241a]/50 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#f6f0e5] to-transparent" />
+        <div className="relative mx-auto flex min-h-[78vh] w-full max-w-7xl items-center px-5 py-14 sm:px-8 lg:py-20">
           <div className="max-w-3xl text-white">
-            <p className="text-sm font-semibold tracking-[0.18em] text-[#f2d8a5]">
+            <p className="text-xs font-semibold tracking-[0.28em] text-[#e7c98e] sm:text-sm">
               TAIWAN TEA SHOP
             </p>
-            <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
-              茶葉小舖
+            <h1 className="font-serif-brand mt-6 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-wide sm:text-6xl lg:text-7xl">
+              山霧裡的台灣茶香
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/88">
-              精選台灣高山烏龍、紅玉紅茶與冷泡茶，從商品挑選到送出訂單都在同一頁完成。
+            <p className="mt-6 max-w-2xl text-lg leading-9 text-white/86 sm:text-xl">
+              精選高山烏龍、蜜香紅茶與冷泡茶款，以乾淨工序保留茶湯層次，為日常留一席溫潤。
             </p>
-            <div className="mt-8 flex flex-wrap gap-3 text-sm font-medium text-white">
-              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
+            <div className="mt-9 flex flex-wrap items-center gap-3 text-sm font-medium text-white">
+              <a
+                href="#products"
+                className="rounded-full bg-[#d6a85b] px-6 py-3 font-semibold text-[#18231b] shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#e5bd78] focus:outline-none focus:ring-2 focus:ring-white/80"
+              >
+                瀏覽精選
+              </a>
+              <span className="rounded-full border border-white/30 bg-white/12 px-4 py-2 backdrop-blur-sm">
                 今日商品 {products.length} 款
               </span>
-              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
+              <span className="rounded-full border border-white/30 bg-white/12 px-4 py-2 backdrop-blur-sm">
                 購物車 {itemCount} 件
               </span>
-              <span className="border border-white/35 bg-white/14 px-4 py-2 backdrop-blur-sm">
+              <span className="rounded-full border border-white/30 bg-white/12 px-4 py-2 backdrop-blur-sm">
                 小計 {currency.format(subtotal)}
               </span>
             </div>
@@ -233,26 +240,29 @@ export function Storefront() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1fr_390px] lg:items-start lg:py-16">
+      <section
+        id="products"
+        className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1fr_400px] lg:items-start lg:py-20"
+      >
         <div>
-          <div className="mb-6 flex items-end justify-between gap-4">
+          <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-sm font-semibold tracking-[0.16em] text-[#8a5a1f]">
+              <p className="text-xs font-semibold tracking-[0.24em] text-[#8a5a1f]">
                 SELECTED TEA
               </p>
-              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[#17241d]">
+              <h2 className="font-serif-brand mt-2 text-4xl font-semibold tracking-wide text-[#17241d]">
                 精選茶款
               </h2>
-              <p className="mt-3 text-sm leading-6 text-[#667268]">
+              <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#686154]">
                 依香氣、焙度與飲用情境挑選，結帳前可自由調整數量。
               </p>
             </div>
-            <p className="shrink-0 text-sm font-semibold text-[#2b5c45]">
+            <p className="shrink-0 rounded-full border border-[#d9c9ad] bg-[#fffaf2] px-4 py-2 text-sm font-semibold text-[#2b5c45]">
               符合 {filteredProducts.length} 筆
             </p>
           </div>
 
-          <div className="mb-6 rounded-lg border border-[#e3d6c3] bg-white/90 p-4 shadow-sm shadow-[#6f5b3d]/5">
+          <div className="mb-8 rounded-2xl border border-[#e1d2b8] bg-[#fffaf2]/95 p-5 shadow-sm shadow-[#6f5b3d]/8">
             <label
               className="block text-sm font-semibold text-[#263a30]"
               htmlFor="product_search"
@@ -265,17 +275,17 @@ export function Storefront() {
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="輸入茶葉名稱關鍵字"
-              className="mt-2 h-11 w-full border border-[#cbb99f] bg-[#fffdf9] px-3 text-[#1d2620] placeholder:text-[#8a938b] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+              className="mt-2 h-12 w-full rounded-xl border border-[#cbb99f] bg-white px-4 text-[#1d2620] placeholder:text-[#8a938b] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
             />
 
             <div className="mt-4 flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={() => setSelectedCategory("")}
-                className={`h-10 border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
+                className={`h-10 rounded-full border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
                   selectedCategory === ""
                     ? "border-[#263a30] bg-[#263a30] text-white"
-                    : "border-[#cbb99f] bg-[#f8f5ef] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
+                    : "border-[#cbb99f] bg-[#f6f0e5] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
                 }`}
               >
                 全部
@@ -285,10 +295,10 @@ export function Storefront() {
                   key={category}
                   type="button"
                   onClick={() => setSelectedCategory(category)}
-                  className={`h-10 border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
+                  className={`h-10 rounded-full border px-4 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#c99345] ${
                     selectedCategory === category
                       ? "border-[#263a30] bg-[#263a30] text-white"
-                      : "border-[#cbb99f] bg-[#f8f5ef] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
+                      : "border-[#cbb99f] bg-[#f6f0e5] text-[#526056] hover:border-[#8a5a1f] hover:text-[#263a30]"
                   }`}
                 >
                   {category}
@@ -316,13 +326,13 @@ export function Storefront() {
                   沒有符合條件的茶葉，請調整搜尋關鍵字或分類。
                 </div>
               ) : (
-                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-7 sm:grid-cols-2 xl:grid-cols-3">
                   {filteredProducts.map((product) => (
                     <article
                       key={product.id}
-                      className="group flex h-full min-h-[460px] flex-col overflow-hidden rounded-xl border border-[#e0d4c2] bg-white shadow-sm shadow-[#7b6a4f]/10 transition duration-300 hover:-translate-y-1 hover:border-[#c7a66c] hover:shadow-2xl hover:shadow-[#6f5b3d]/18"
+                      className="group flex h-full min-h-[520px] flex-col overflow-hidden rounded-3xl border border-[#e1d2b8] bg-[#fffaf2] shadow-[0_18px_45px_rgba(73,55,32,0.08)] transition duration-300 hover:-translate-y-1.5 hover:border-[#c7a66c] hover:shadow-[0_26px_65px_rgba(73,55,32,0.16)]"
                     >
-                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#efe7db]">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-3xl bg-[#efe7db]">
                         <Image
                           src={product.image_url}
                           alt={product.name}
@@ -331,27 +341,27 @@ export function Storefront() {
                           className="object-cover transition duration-500 group-hover:scale-[1.03]"
                         />
                       </div>
-                      <div className="flex flex-1 flex-col p-5">
+                      <div className="flex flex-1 flex-col p-6">
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <p className="text-xs font-semibold tracking-[0.16em] text-[#9b6a2e]">
+                            <p className="text-xs font-semibold tracking-[0.2em] text-[#9b6a2e]">
                               {product.category}
                             </p>
-                            <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#17241d]">
+                            <h3 className="font-serif-brand mt-2 text-2xl font-semibold tracking-wide text-[#17241d]">
                               {product.name}
                             </h3>
                           </div>
-                          <p className="whitespace-nowrap text-lg font-semibold text-[#2b5c45]">
+                          <p className="whitespace-nowrap text-xl font-bold text-[#2b5c45]">
                             {currency.format(product.price)}
                           </p>
                         </div>
-                        <p className="mt-4 flex-1 text-[15px] leading-7 text-[#5f6b62]">
+                        <p className="mt-4 flex-1 text-[15px] leading-7 text-[#686154]">
                           {product.description}
                         </p>
                         <button
                           type="button"
                           onClick={() => addToCart(product)}
-                          className="mt-6 h-12 w-full rounded-lg bg-[#263a30] px-4 text-sm font-semibold text-white transition hover:bg-[#355a46] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                          className="mt-7 h-12 w-full rounded-full bg-[#263a30] px-5 text-sm font-semibold text-white shadow-lg shadow-[#263a30]/15 transition hover:bg-[#345642] hover:shadow-xl hover:shadow-[#263a30]/22 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
                         >
                           加入購物車
                         </button>
@@ -364,22 +374,29 @@ export function Storefront() {
           )}
         </div>
 
-        <aside className="sticky top-4 border border-[#d8c8ad] bg-white p-5 shadow-xl shadow-[#7b6a4f]/10">
-          <h2 className="text-2xl font-semibold">購物車</h2>
+        <aside className="sticky top-4 rounded-3xl border border-[#e1d2b8] bg-[#fffaf2] p-6 shadow-[0_22px_70px_rgba(73,55,32,0.13)]">
+          <p className="text-xs font-semibold tracking-[0.22em] text-[#9b6a2e]">
+            CART
+          </p>
+          <h2 className="font-serif-brand mt-2 text-3xl font-semibold text-[#17241d]">
+            購物車
+          </h2>
           <div className="mt-5 space-y-4">
             {cartLines.length === 0 ? (
-              <p className="border border-dashed border-[#cbb99f] p-5 text-sm leading-6 text-[#667268]">
+              <p className="rounded-2xl border border-dashed border-[#cbb99f] bg-white/70 p-5 text-sm leading-6 text-[#667268]">
                 尚未加入商品。從左側商品列表挑選喜歡的茶葉。
               </p>
             ) : (
               cartLines.map((line) => (
                 <div
                   key={line.product.id}
-                  className="border-b border-[#eadfce] pb-4 last:border-b-0 last:pb-0"
+                  className="rounded-2xl border border-[#eadfce] bg-white/75 p-4"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="font-semibold">{line.product.name}</p>
+                      <p className="font-semibold text-[#17241d]">
+                        {line.product.name}
+                      </p>
                       <p className="mt-1 text-sm text-[#667268]">
                         {currency.format(line.product.price)} / 份
                       </p>
@@ -387,7 +404,7 @@ export function Storefront() {
                     <button
                       type="button"
                       onClick={() => updateQuantity(line.product.id, 0)}
-                      className="text-sm font-semibold text-[#9a3d2f] hover:text-[#6f2118]"
+                      className="rounded-full px-2 py-1 text-sm font-semibold text-[#9a3d2f] hover:bg-[#fff1e8] hover:text-[#6f2118]"
                     >
                       移除
                     </button>
@@ -405,10 +422,10 @@ export function Storefront() {
                             Number(event.target.value),
                           )
                         }
-                        className="ml-3 h-10 w-20 border border-[#cbb99f] px-3 text-[#1d2620] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                        className="ml-3 h-10 w-20 rounded-xl border border-[#cbb99f] bg-white px-3 text-[#1d2620] focus:outline-none focus:ring-2 focus:ring-[#c99345]"
                       />
                     </label>
-                    <p className="font-semibold">
+                    <p className="font-semibold text-[#2b5c45]">
                       {currency.format(line.product.price * line.quantity)}
                     </p>
                   </div>
@@ -417,14 +434,16 @@ export function Storefront() {
             )}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-[#d8c8ad] pt-5 text-lg font-semibold">
+          <div className="mt-6 flex items-center justify-between border-t border-[#d8c8ad] pt-5">
             <span>小計</span>
-            <span>{currency.format(subtotal)}</span>
+            <span className="text-2xl font-bold text-[#2b5c45]">
+              {currency.format(subtotal)}
+            </span>
           </div>
 
           <form onSubmit={submitOrder} className="mt-6 space-y-4">
             <div>
-              <label className="text-sm font-medium" htmlFor="customer_name">
+              <label className="text-sm font-semibold" htmlFor="customer_name">
                 姓名
               </label>
               <input
@@ -437,11 +456,11 @@ export function Storefront() {
                     customer_name: event.target.value,
                   }))
                 }
-                className="mt-2 h-11 w-full border border-[#cbb99f] px-3 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                className="mt-2 h-12 w-full rounded-xl border border-[#cbb99f] bg-white px-4 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
               />
             </div>
             <div>
-              <label className="text-sm font-medium" htmlFor="customer_email">
+              <label className="text-sm font-semibold" htmlFor="customer_email">
                 Email
               </label>
               <input
@@ -455,11 +474,11 @@ export function Storefront() {
                     customer_email: event.target.value,
                   }))
                 }
-                className="mt-2 h-11 w-full border border-[#cbb99f] px-3 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                className="mt-2 h-12 w-full rounded-xl border border-[#cbb99f] bg-white px-4 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
               />
             </div>
             <div>
-              <label className="text-sm font-medium" htmlFor="customer_phone">
+              <label className="text-sm font-semibold" htmlFor="customer_phone">
                 電話
               </label>
               <input
@@ -473,14 +492,14 @@ export function Storefront() {
                     customer_phone: event.target.value,
                   }))
                 }
-                className="mt-2 h-11 w-full border border-[#cbb99f] px-3 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
+                className="mt-2 h-12 w-full rounded-xl border border-[#cbb99f] bg-white px-4 focus:outline-none focus:ring-2 focus:ring-[#c99345]"
               />
             </div>
 
             <button
               type="submit"
               disabled={checkoutState === "submitting" || cartLines.length === 0}
-              className="h-12 w-full bg-[#c99345] px-4 font-semibold text-[#1d2620] transition hover:bg-[#d7a35b] focus:outline-none focus:ring-2 focus:ring-[#263a30] disabled:cursor-not-allowed disabled:bg-[#d9d1c4] disabled:text-[#756d62]"
+              className="h-12 w-full rounded-full bg-[#d6a85b] px-4 font-semibold text-[#17241d] shadow-lg shadow-[#9b6a2e]/16 transition hover:bg-[#e5bd78] focus:outline-none focus:ring-2 focus:ring-[#263a30] disabled:cursor-not-allowed disabled:bg-[#d9d1c4] disabled:text-[#756d62]"
             >
               {checkoutState === "submitting" ? "送出中..." : "送出訂單"}
             </button>
@@ -489,8 +508,8 @@ export function Storefront() {
               <p
                 className={`border p-3 text-sm leading-6 ${
                   checkoutState === "success"
-                    ? "border-[#98b894] bg-[#f3fbef] text-[#2d5e36]"
-                    : "border-[#c07166] bg-[#fff8f3] text-[#8a2f24]"
+                    ? "rounded-2xl border-[#98b894] bg-[#f3fbef] text-[#2d5e36]"
+                    : "rounded-2xl border-[#c07166] bg-[#fff8f3] text-[#8a2f24]"
                 }`}
               >
                 {checkoutMessage}
@@ -499,6 +518,20 @@ export function Storefront() {
           </form>
         </aside>
       </section>
+
+      <footer className="border-t border-[#dfd0b8] bg-[#17241d] px-5 py-10 text-[#efe6d6] sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-serif-brand text-2xl font-semibold">茶葉小舖</p>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-[#d8c9ad]">
+              從台灣山林與茶席出發，挑選適合日常、款待與冷泡的風味茶款。
+            </p>
+          </div>
+          <p className="text-sm text-[#c7b897]">
+            © 2026 茶葉小舖. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
