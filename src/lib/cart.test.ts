@@ -27,6 +27,10 @@ describe("cartSubtotal", () => {
     expect(cartSubtotal([line(680, 2)])).toBe(1360);
   });
 
+  it("數量小於 0 時以 0 計算", () => {
+    expect(cartSubtotal([line(680, -1)])).toBe(0);
+  });
+
   it("多項商品加總", () => {
     expect(cartSubtotal([line(680, 2), line(520, 1)])).toBe(1880);
   });
